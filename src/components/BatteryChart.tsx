@@ -19,11 +19,17 @@ const batteryData = [
 
 export const BatteryChart = () => {
   return (
-    <Card className="bg-gradient-card border-primary/20 backdrop-blur-sm">
+    <Card className="bg-card border border-border shadow-card">
       <div className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold">Historial de Batería</h3>
-          <div className="text-sm text-muted-foreground">Últimas 24 horas</div>
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-foreground mb-2">Battery Level Over Time</h3>
+          <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">Battery Level</p>
+            <div className="flex items-baseline space-x-2">
+              <h3 className="text-2xl font-bold text-foreground">85%</h3>
+              <span className="text-sm text-destructive">Last 24 Hours -5%</span>
+            </div>
+          </div>
         </div>
         
         <div className="h-64 w-full">
@@ -34,11 +40,16 @@ export const BatteryChart = () => {
                 dataKey="time" 
                 stroke="hsl(var(--muted-foreground))"
                 fontSize={12}
+                axisLine={false}
+                tickLine={false}
               />
               <YAxis 
                 stroke="hsl(var(--muted-foreground))"
                 fontSize={12}
                 domain={[0, 100]}
+                axisLine={false}
+                tickLine={false}
+                hide
               />
               <Tooltip 
                 contentStyle={{ 
@@ -47,22 +58,18 @@ export const BatteryChart = () => {
                   borderRadius: '8px',
                   color: 'hsl(var(--card-foreground))'
                 }}
-                labelFormatter={(value) => `Hora: ${value}`}
-                formatter={(value) => [`${value}%`, 'Batería']}
+                labelFormatter={(value) => `Time: ${value}`}
+                formatter={(value) => [`${value}%`, 'Battery']}
               />
               <Line 
                 type="monotone" 
                 dataKey="battery" 
                 stroke="hsl(var(--primary))" 
-                strokeWidth={3}
-                dot={{ 
-                  fill: 'hsl(var(--primary))', 
-                  strokeWidth: 2,
-                  r: 4 
-                }}
+                strokeWidth={2}
+                dot={false}
                 activeDot={{ 
-                  r: 6, 
-                  fill: 'hsl(var(--primary-glow))',
+                  r: 4, 
+                  fill: 'hsl(var(--primary))',
                   stroke: 'hsl(var(--primary))',
                   strokeWidth: 2
                 }}

@@ -2,102 +2,77 @@ import { BatteryStatus } from "@/components/BatteryStatus";
 import { BatteryChart } from "@/components/BatteryChart";
 import { RobotMap } from "@/components/RobotMap";
 import { RobotInfo } from "@/components/RobotInfo";
+import Sidebar from "@/components/Sidebar";
 
 const Dashboard = () => {
   // Datos simulados - en producción vendrían de una API
-  const batteryLevel = 32;
+  const batteryLevel = 85;
   const isCharging = false;
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/50">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
-                <span className="text-primary-foreground font-bold text-lg">Y</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-                  Yamaha MuseBot Dashboard
-                </h1>
-                <p className="text-sm text-muted-foreground">Centro de control del robot guía</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-              <span className="text-sm text-success font-medium">Sistema operativo</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-background flex">
+      {/* Sidebar */}
+      <Sidebar />
+      
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Columna izquierda - Información del robot */}
-          <div className="lg:col-span-1 space-y-6">
-            <RobotInfo 
-              robotId="YMH-BOT-001"
-              uptime="8h 42m"
-              visitorsServed={23}
-              connectionStatus="connected"
-            />
+      <div className="flex-1">
+        {/* Header */}
+        <header className="border-b border-border bg-card px-8 py-6">
+          <div>
+            <h1 className="text-3xl font-bold text-foreground">Robot Status</h1>
+          </div>
+        </header>
+
+        {/* Dashboard Content */}
+        <main className="p-8">
+          {/* Status Cards Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-card rounded-lg border border-border p-6 shadow-card">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Temperature</p>
+                <div className="flex items-baseline space-x-2">
+                  <h3 className="text-3xl font-bold text-foreground">25°C</h3>
+                  <span className="text-sm text-success">+1°C</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-card rounded-lg border border-border p-6 shadow-card">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Battery Level</p>
+                <div className="flex items-baseline space-x-2">
+                  <h3 className="text-3xl font-bold text-foreground">85%</h3>
+                  <span className="text-sm text-destructive">-5%</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-card rounded-lg border border-border p-6 shadow-card">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Location</p>
+                <div className="flex items-baseline space-x-2">
+                  <h3 className="text-xl font-bold text-foreground">Gallery 3</h3>
+                  <span className="text-sm text-muted-foreground">N/A</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Columna central - Batería */}
-          <div className="lg:col-span-1 space-y-6">
-            <BatteryStatus 
-              percentage={batteryLevel}
-              isCharging={isCharging}
-              voltage={12.1}
-              temperature={28}
-            />
+          {/* Battery Chart Section */}
+          <div className="mb-8">
             <BatteryChart />
           </div>
 
-          {/* Columna derecha - Mapa */}
-          <div className="lg:col-span-1">
+          {/* Robot Location Section */}
+          <div>
             <RobotMap 
               position={{ x: 45, y: 30 }}
               destination={{ x: 70, y: 60 }}
               status="guiding"
             />
           </div>
-        </div>
-
-        {/* Sección inferior - Métricas adicionales */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-card rounded-lg border border-primary/20 p-4 backdrop-blur-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-success">98.2%</div>
-              <div className="text-sm text-muted-foreground">Disponibilidad</div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-card rounded-lg border border-primary/20 p-4 backdrop-blur-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">4.8</div>
-              <div className="text-sm text-muted-foreground">Rating promedio</div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-card rounded-lg border border-primary/20 p-4 backdrop-blur-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-warning">3</div>
-              <div className="text-sm text-muted-foreground">Tours activos</div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-card rounded-lg border border-primary/20 p-4 backdrop-blur-sm">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-muted-foreground">12.5°C</div>
-              <div className="text-sm text-muted-foreground">Temp. ambiente</div>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };

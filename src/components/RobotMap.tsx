@@ -33,70 +33,25 @@ export const RobotMap = ({
   };
 
   return (
-    <Card className="bg-gradient-card border-primary/20 backdrop-blur-sm">
+    <Card className="bg-card border border-border shadow-card">
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">Posición del Robot</h3>
-          <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${getStatusColor().replace('text-', 'bg-')} animate-pulse`}></div>
-            <span className={`text-sm font-medium ${getStatusColor()}`}>
-              {getStatusLabel()}
-            </span>
-          </div>
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold text-foreground">Robot Location</h3>
         </div>
 
-        {/* Mapa simplificado del museo */}
-        <div className="relative bg-muted/30 rounded-lg h-48 overflow-hidden border">
-          {/* Sala principal */}
-          <div className="absolute inset-4 border-2 border-dashed border-muted-foreground/30 rounded">
-            <span className="absolute top-2 left-2 text-xs text-muted-foreground">Sala Principal</span>
-          </div>
-          
-          {/* Salas secundarias */}
-          <div className="absolute top-4 right-4 w-16 h-12 border border-muted-foreground/20 rounded">
-            <span className="text-xs p-1 text-muted-foreground">Sala A</span>
-          </div>
-          <div className="absolute bottom-4 right-4 w-16 h-12 border border-muted-foreground/20 rounded">
-            <span className="text-xs p-1 text-muted-foreground">Sala B</span>
-          </div>
-
-          {/* Entrada */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-4 bg-primary/30 rounded-t">
-            <span className="text-xs text-center block text-primary">Entrada</span>
-          </div>
-
-          {/* Posición actual del robot */}
-          <div 
-            className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 z-10"
-            style={{ left: `${position.x}%`, top: `${position.y}%` }}
-          >
-            <div className="relative">
-              <div className="w-4 h-4 bg-primary rounded-full shadow-glow animate-pulse"></div>
-              <MapPin className="absolute -top-1 -left-1 w-6 h-6 text-primary" />
+        {/* Simplified museum map */}
+        <div className="bg-muted/10 rounded-lg p-4 h-64 flex items-center justify-center">
+          <div className="w-full h-full relative bg-muted/5 rounded border border-border">
+            {/* Map placeholder matching the reference image style */}
+            <div className="absolute inset-4 border border-dashed border-muted-foreground/30 rounded flex items-center justify-center">
+              <div className="text-center">
+                <MapPin className="w-8 h-8 text-primary mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground">
+                  Current Position: Gallery 3<br />
+                  Coordinates: X: {position.x}, Y: {position.y}
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* Destino */}
-          {status === 'moving' && (
-            <div 
-              className="absolute w-3 h-3 transform -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${destination.x}%`, top: `${destination.y}%` }}
-            >
-              <div className="w-3 h-3 bg-warning rounded-full opacity-60"></div>
-              <Navigation className="absolute -top-1 -left-1 w-5 h-5 text-warning" />
-            </div>
-          )}
-        </div>
-
-        {/* Coordenadas */}
-        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="text-muted-foreground">Coordenadas:</span>
-            <span className="ml-2 font-medium">X: {position.x}, Y: {position.y}</span>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Sala actual:</span>
-            <span className="ml-2 font-medium">Sala Principal</span>
           </div>
         </div>
       </div>
